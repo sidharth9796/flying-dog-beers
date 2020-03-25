@@ -6,13 +6,13 @@ import plotly.graph_objs as go
 import pandas as pd
 import os
 
-df = pd.read_csv('/home/drive/neuralcoref/BERT_metrics_analysis.csv')
-df_count=pd.read_csv('entity_count.csv')
+df = pd.read_csv('https://raw.githubusercontent.com/sidharth9796/flying-dog-beers/master/BERT_metrics_analysis.csv')
+df_count=pd.read_csv('https://raw.githubusercontent.com/sidharth9796/flying-dog-beers/master/entity_count.csv')
 
-df1 = pd.read_csv('/home/drive/neuralcoref/entity_count.csv')
-df2 = pd.read_csv('/home/drive/neuralcoref/data_new.csv')
+df1 = pd.read_csv('https://raw.githubusercontent.com/sidharth9796/flying-dog-beers/master/entity_count.csv')
+df2 = pd.read_csv('https://raw.githubusercontent.com/sidharth9796/flying-dog-beers/master/data_new.csv')
 
-df_model=pd.read_csv('datarecords.csv')
+df_model=pd.read_csv('https://raw.githubusercontent.com/sidharth9796/flying-dog-beers/master/datarecords.csv')
 #df_summary=pd.read_csv('model_summary.csv')
 
 external_stylesheets=[
