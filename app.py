@@ -81,16 +81,8 @@ model_summary_dataset=html.Div( [
                                             children="RECORDS ",style={"margin-left": "4%",'fontSize':'1.5rem','color':'blue',"margin-bottom": "0%"},
                                             className="card-text",
                                         ),
-                            ] )                            ,
-dcc.Dropdown(id="switches-inline-input-metrics-summary",
-            options= [  {'label':'BERT model' , 'value':'A-BERT'      },
-                        {'label':'SPACY model' , 'value':'B-SPACY'    },
-                     ],
-          placeholder="Select entity",
-          style={'height': '300%', 'width': '100%','fontSize':'1.7rem'},
-          value=[] ) ,
-dcc.Graph(id='model_dataset_graph',animate=True,style={"backgroundColor": "#1a2d46",'color':'#ffffff'} )
-                            ] )
+                            ] )                         
+
 DropdownApp_entity_data =  html.Div([
     html.H1(children='Evaluation metrics',style={"margin-left":"4%",'fontSize':'3.0rem','font-family': 'Trocchi, serif','color':'blue'}),
     dcc.Dropdown(id="entity_dropdown_dataset_model",
