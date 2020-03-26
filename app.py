@@ -35,14 +35,53 @@ server = app.server
 #'color': 'blue', 'fontSize': 14
 #app.css.append_css({'external_url': 'https://codepen.io/amyoshino/pen/jzXypZ.css'})
 model_summary_dataset=html.Div( [
-              html.H1(children='Model summary with varying dataset',style={"margin-left":"4%",'fontSize':'3.0rem','font-family': 'Trocchi, serif','color':'blue'}),
-              dcc.Dropdown(id="switches-inline-input-dataset-summary",
-            options=[{
-                    'label':i,
-                    'value':i}for i in df['Total_Records'].unique()],
-            placeholder="Select entity",
+           html.H1(children='Model summary with varying dataset',style={"margin-left":"4%",'fontSize':'3.0rem','font-family': 'Trocchi, serif','color':'blue'}),
+
+
+            html.P(
+           children="Select Option - DATASPLIT / METRICS ",style={"margin-left": "0%",'fontSize':'1.5rem', "font-weight":"bold", 'font-family':'Trocchi, serif','color':'rgb(47,79,79)'},className="card-title"),
+
+           dcc.Dropdown( id="radioitems-input-modal",
+            options=[
+                { "label": " METRICS-Precision,Recall,F1 " , "value":"no"  },
+                { "label": " DATA SPLIT-Train,Val,Test " , "value":"data_split"  }
+                                                                                                                            ],
+            placeholder="Select option - DATASPLIT/METRICS ",
             style={'height': '300%', 'width': '100%','fontSize':'1.7rem'},
-            value=[] ),
+            value=[] )  ,
+            html.Div([
+                    html.Div([
+                            html.P(
+              children="Select Records",style={"margin-left": "0%",'fontSize':'1.5rem', "font-weight":"bold" , "margin-left": "4%",'font-family':'Trocchi, serif','color':'rgb(47,79,79)'},className="card-title"),
+                            dcc.Dropdown( id="switches-inline-input-dataset-summary-front-modal",
+                                options=[{
+                                'label':i,
+                                'value':i}for i in df_model['TOTAL RECORDS'].unique()],
+                                                    placeholder="Select DATASET - first",
+                                                    style={'height': '300%', 'width': '100%','fontSize':'1.7rem',"margin-left": "2%"},
+                                                    value=[] )  ] ,className='six columns' )  ,
+
+                                        html.Div([
+                                        html.P(
+                                            children="Select Model ",style={"margin-left": "0%",'fontSize':'1.5rem',"font-weight":"bold" , 'font-family':'Trocchi, serif','color':'rgb(47,79,79)'},className="card-title"),
+                                        dcc.Dropdown(id="switches-inline-input-modal-summary-front-modal",
+                                                     options=[{
+                                                             'label':i,
+                                                             'value':i}for i in df_model['MODEL'].unique()],
+                                                      placeholder="Select MODEL - second",
+                                                      style={'height': '300%', 'width': '100%','fontSize':'1.7rem'},
+                                                      multi = True,
+                                                      value=[] )
+                                                            ], className='six columns')
+                                                      ]  , className="row" ) ,
+
+
+                                        dcc.Graph(id='model_summary_dataset-front-modal',animate=True, style={'width': '100%','margin-top': '22px'} ),
+                                        html.P(
+                                            children="RECORDS ",style={"margin-left": "4%",'fontSize':'1.5rem','color':'blue',"margin-bottom": "0%"},
+                                            className="card-text",
+                                        ),
+                            ] )                            ,
 
  dcc.Dropdown(id="switches-inline-input-metrics-summary",
             options= [  {'label':'BERT model' , 'value':'A-BERT'      },
@@ -567,6 +606,77 @@ def update_figure(dropdown,toggle):
                                        )
                                       )
     return figure
+
+# modal card one - BERT METRICS ANALYSIS
+@app.callback(
+    dash.dependencies.Output('model_summary_dataset-front-modal','figure'),
+    [
+    dash.dependencies.Input('switches-inline-input-dataset-summary-front-modal','value'),
+    dash.dependencies.Input('switches-inline-input-modal-summary-front-modal','value'),
+    dash.dependencies.Input('radioitems-input-modal','value'),
+                          ] )
+
+def modelsummarydatasetfrontmodal(dataset,model,split):
+    print(split)
+    print("njnkbttttttttttttttttttttttttt")
+    print("\n\n\n\n\n\n")
+    print("\n\n\n\n\n\n")
+    #print(type(dropdown))
+    print(dataset)
+    data_select=[]
+    metrics=['Precision','Recall','F1']
+    split_list=['TRAIN','VAL','TEST']
+    total_df =df_model.groupby('TOTAL RECORDS')
+    for n,g in total_df:
+        if n == dataset:
+            #print(min_df[i])df
+            g=df_model[df_model['TOTAL RECORDS'] == dataset]
+            print("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
+            print(g)
+            #x=g[g['Entity'] == value]['Total_Records']
+            if split=='data_split':
+                print("yessssssssssssssssssssssssssssssssssssssssssssssssssssssss")
+                for i in split_list:
+                    for index,value in enumerate(model):
+                        data_select.append(go.Bar(x=g['TOTAL RECORDS'] ,y=g[g['MODEL'] == value][i],text=("{0} {1}".format(value,i)),name=("{0} {1}".format(value,i)),textposition='auto',marker=dict(color = colors[index] ,line=dict(color='rgb(8,48,107)'))))
+
+            elif split=='no':
+                for j in metrics:
+                    for index,value in enumerate(model):
+                        data_select.append(go.Bar(x=g['TOTAL RECORDS'] ,y=g[g['MODEL'] == value][j],text=("{0} {1}".format(value,j)),name=("{0} {1}".format(value,j)),textposition='auto',marker=dict(color = colors[index] ,line=dict(color='rgb(8,48,107)'))))
+
+
+    figure=dict(
+                            data=data_select,
+                            layout=go.Layout(title='EVALUATION METRICS',
+                                   colorway=["#EF963B", "#EF533B"],hovermode="closest",
+                                    xaxis={'title': "Records",
+                                           'titlefont':{'color': 'black','size': 20},
+                                           'tickfont':{'color': 'black','size': 20 } },
+                                   yaxis={'title': "ACCURACY",
+                                          'titlefont':{'color': 'black','size': 20},
+                                          'tickfont':{'color': 'black','size': 20 } },
+                                   legend={'x': 1, 'y':1 }
+                                           )
+                                          )
+    return figure
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #card four - MODEL SUMMARY BASED ON RECORDS
 @app.callback(
