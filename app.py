@@ -82,8 +82,7 @@ model_summary_dataset=html.Div( [
                                             className="card-text",
                                         ),
                             ] )                            ,
-
- dcc.Dropdown(id="switches-inline-input-metrics-summary",
+dcc.Dropdown(id="switches-inline-input-metrics-summary",
             options= [  {'label':'BERT model' , 'value':'A-BERT'      },
                         {'label':'SPACY model' , 'value':'B-SPACY'    },
                      ],
