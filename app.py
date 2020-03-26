@@ -15,6 +15,7 @@ df2 = pd.read_csv('https://raw.githubusercontent.com/sidharth9796/flying-dog-bee
 df_model=pd.read_csv('https://raw.githubusercontent.com/sidharth9796/flying-dog-beers/master/datarecords.csv')
 #df_summary=pd.read_csv('model_summary.csv')
 
+
 external_stylesheets=[
     'https://codepen.io/chriddyp/pen/bWLwgP.css',
     {   'href': 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css',
@@ -38,7 +39,7 @@ model_summary_dataset=html.Div( [
            html.H1(children='Model summary with varying dataset',style={"margin-left":"4%",'fontSize':'3.0rem','font-family': 'Trocchi, serif','color':'blue'}),
 
 
-           html.P(
+            html.P(
            children="Select Option - DATASPLIT / METRICS ",style={"margin-left": "0%",'fontSize':'1.5rem', "font-weight":"bold", 'font-family':'Trocchi, serif','color':'rgb(47,79,79)'},className="card-title"),
 
            dcc.Dropdown( id="radioitems-input-modal",
@@ -81,35 +82,9 @@ model_summary_dataset=html.Div( [
                                             children="RECORDS ",style={"margin-left": "4%",'fontSize':'1.5rem','color':'blue',"margin-bottom": "0%"},
                                             className="card-text",
                                         ),
-                            ] )                         
+                            ] )
 
-DropdownApp_entity_data =  html.Div([
-    html.H1(children='Evaluation metrics',style={"margin-left":"4%",'fontSize':'3.0rem','font-family': 'Trocchi, serif','color':'blue'}),
-    dcc.Dropdown(id="entity_dropdown_dataset_model",
-                options=[{
-                        'label': i,
-                        'value': i}for i in df['Total_Records'].unique()],
-                        placeholder="Select entity",
-                        style={'height': '300%', 'width': '100%','fontSize':'1.7rem'},
-                        value=[]),
 
-    dbc.FormGroup(                                   [
-            dbc.Label("Toggle Metrics",style={'fontSize':'2rem'},),
-            dbc.Checklist(
-                options=[
-                    {"label": "Precision", "value": 'Precision'},
-                    {"label": "Recall", "value":  'Recall'},
-                    {"label": "F1", "value": 'F1'}
-                ],
-                value=[],
-                id="switches-inline-input-modal-dataset",
-                style={'height': '300%', 'width': '100%','fontSize':'1.7rem'},
-                inline=True,
-                switch=True,
-            ),
-        ]
-    )  ,
-    dcc.Graph(id='entity_graph_modal_dataset',animate=True,style={"backgroundColor": "#1a2d46",'color':'#ffffff'} ) ])
 
 DropdownApp_entity = html.Div([
     html.H1(children='Evaluation metrics',style={"margin-left":"4%",'fontSize':'3.0rem','font-family': 'Trocchi, serif','color':'blue'}),
@@ -121,7 +96,6 @@ DropdownApp_entity = html.Div([
                         style={'height': '300%', 'width': '100%','fontSize':'1.7rem'},
                         multi = True,
                         value=[]),
-
     dbc.FormGroup(                                   [
             dbc.Label("Toggle Metrics",style={'fontSize':'2rem'}),
             dbc.Checklist(
@@ -273,43 +247,92 @@ app.layout = html.Div(
                 style={"width": "70rem","height":"70rem",'background-color':'rgb(176,196,222)'},
             )     ],className='six columns'),
 
-            html.Div([  dbc.Card(
-                             [  #dbc.CardImg(src="logo.png", top=True),
-                                 dbc.CardBody(
-                                     [   html.Div([
-                                             html.H1(children="MODEL SUMMARY",style={"margin-left": "4%",'fontSize':'2.5rem','font-family': 'Trocchi, serif','color':'blue'},className="card-title"),
-                                             dcc.Dropdown(
-                                                        id="model_name_front",
-                                                        options=[{
-                                                                'label': "Model A",
-                                                                'value': "Model A"},
-                                                                {"label": "Model B","value": "Model B"}
-                                                                ],
-                                                                placeholder="Select model",
-                                                        style={'height': '300%', 'width': '100%'},
-                                                        multi = True,
-                                                        value=['Model A']),
-                                        dcc.Graph(id='model_summary_front',animate=True,style={'margin':'20px 0px'}          )  ]),
+                html.Div([
+                            dbc.Card( [
+                                #dbc.CardImg(src="logo.png", top=True),
+                                dbc.CardBody(
+                                    [   html.Div([
+                                        html.H2(children="MODEL SUMMARY BASED ON RECORDS", style={"margin-left": "4%",'fontSize':'2.5rem',"font-weight":"bold",'font-family':'Trocchi, serif','color':'rgb(0,0,128)'}, className="card-title"),
+
+
                                         html.P(
-                                            children="The Consolidated Training Results summary of models have been plotted",style={"margin-left": "4%",'fontSize':'1.5rem','color':'red'},
+                                        children="Select Option - DATASPLIT / METRICS ",style={"margin-left": "0%",'fontSize':'1.5rem', "font-weight":"bold", 'font-family':'Trocchi, serif','color':'rgb(47,79,79)'},className="card-title"),
+
+                                        dcc.Dropdown( id="radioitems-input",
+                                                   options=[
+                                                    { "label": " METRICS-Precision,Recall,F1 " , "value":"no"  },
+                                                    { "label": " DATA SPLIT-Train,Val,Test " , "value":"data_split"  }
+                                                                                                                            ],
+                                                   placeholder="Select option - DATASPLIT/METRICS ",
+                                                   style={'height': '300%', 'width': '100%','fontSize':'1.7rem'},
+                                                   value=[] )  ,
+                                       html.Div([
+                                         html.Div([
+                                        html.P(
+                                            children="Select Records",style={"margin-left": "0%",'fontSize':'1.5rem', "font-weight":"bold" , "margin-left": "4%",'font-family':'Trocchi, serif','color':'rgb(47,79,79)'},className="card-title"),
+                                         dcc.Dropdown( id="switches-inline-input-dataset-summary-front",
+                                                    options=[{
+                                                            'label':i,
+                                                            'value':i}for i in df_model['TOTAL RECORDS'].unique()],
+                                                    placeholder="Select DATASET - first",
+                                                    style={'height': '300%', 'width': '100%','fontSize':'1.7rem',"margin-left": "2%"},
+                                                    value=[] )  ] ,className='six columns' )  ,
+
+                                        html.Div([
+                                        html.P(
+                                            children="Select Model ",style={"margin-left": "0%",'fontSize':'1.5rem',"font-weight":"bold" , 'font-family':'Trocchi, serif','color':'rgb(47,79,79)'},className="card-title"),
+                                        dcc.Dropdown( id="switches-inline-input-modal-summary-front",
+                                                     options=[{
+                                                             'label':i,
+                                                             'value':i}for i in df_model['MODEL'].unique()],
+                                                      placeholder="Select MODEL - second",
+                                                      style={'height': '300%', 'width': '100%','fontSize':'1.7rem'},
+                                                      multi = True,
+                                                      value=[] )
+                                                            ], className='six columns')
+                                                      ]  , className="row" ) ,
+
+
+                                        dcc.Graph(id='model_summary_dataset-front',animate=True, style={'width': '100%','margin-top': '22px'} )
+                                                    ] ),
+                                        html.P(
+                                            children="RECORDS ",style={"margin-left": "4%",'fontSize':'1.5rem','color':'blue',"margin-bottom": "0%"},
                                             className="card-text",
                                         ),
-                                        dbc.Button("Open App", id="opentwo", color='primary', style={'margin': 'auto', 'width': '100%', "margin":"30px 0px"}),
+                                        dbc.Button("Open App", id="openfour",  color='primary', style={'margin': '0px', 'width': '100%'}),
                                         dbc.Modal(
-                                            [
-                                            #    dbc.ModalHeader("Modal"),
-                                                dbc.ModalBody(DropdownApp_model),
+                                            [   dbc.ModalBody(model_summary_dataset),
                                                 dbc.ModalFooter(
-                                                    dbc.Button("Close", id="closetwo", className="ml-auto",outline=True,color="danger",block=True)
+                                                dbc.Button("Close", id="closefour", className="ml-auto",outline=True,color="danger",block=True)
                                                 ),
                                             ],
-                                            id="modaltwo",size="xl"
+                                            id="modalfour",size="xl"
                                         ),
                                     ]
                                 ),
                             ],
-                            style={"width": "70rem","height":"70rem",'background-color':'rgb(176,196,222)' },
-                        )  ],className='six columns')
+                            style={"width": "70rem",'background-color':'rgb(176,196,222)'},
+                        )     ],className='six columns'),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                                        ],className="row",style={"margin":"38px 40px"}  ),
 
 
@@ -365,146 +388,50 @@ html.Div(
         style={"width": "70rem",  "height":"74rem"       , 'background-color':'rgb(176,196,222)'},
     )     ],className='six columns'),
 
-    html.Div([
-                dbc.Card( [
-                    #dbc.CardImg(src="logo.png", top=True),
-                    dbc.CardBody(
-                        [   html.Div([
-                            html.H2(children="MODEL SUMMARY BASED ON RECORDS", style={"margin-left": "4%",'fontSize':'2.5rem',"font-weight":"bold",'font-family':'Trocchi, serif','color':'rgb(0,0,128)'}, className="card-title"),
 
-
-                            html.P(
-                            children="Select Option - DATASPLIT / METRICS ",style={"margin-left": "0%",'fontSize':'1.5rem', "font-weight":"bold", 'font-family':'Trocchi, serif','color':'rgb(47,79,79)'},className="card-title"),
-
-                            dcc.Dropdown( id="radioitems-input",
-                                       options=[
-                                        { "label": " METRICS-Precision,Recall,F1 " , "value":"no"  },
-                                        { "label": " DATA SPLIT-Train,Val,Test " , "value":"data_split"  }
-                                                                                                                ],
-                                       placeholder="Select option - DATASPLIT/METRICS ",
-                                       style={'height': '300%', 'width': '100%','fontSize':'1.7rem'},
-                                       value=[] )  ,
-                           html.Div([
-                             html.Div([
-                            html.P(
-                                children="Select Records",style={"margin-left": "0%",'fontSize':'1.5rem', "font-weight":"bold" , "margin-left": "4%",'font-family':'Trocchi, serif','color':'rgb(47,79,79)'},className="card-title"),
-                             dcc.Dropdown( id="switches-inline-input-dataset-summary-front",
-                                        options=[{
-                                                'label':i,
-                                                'value':i}for i in df_model['TOTAL RECORDS'].unique()],
-                                        placeholder="Select DATASET - first",
-                                        style={'height': '300%', 'width': '100%','fontSize':'1.7rem',"margin-left": "2%"},
-                                        value=[] )  ] ,className='six columns' )  ,
-
-                            html.Div([
-                            html.P(
-                                children="Select Model ",style={"margin-left": "0%",'fontSize':'1.5rem',"font-weight":"bold" , 'font-family':'Trocchi, serif','color':'rgb(47,79,79)'},className="card-title"),
-                            dcc.Dropdown( id="switches-inline-input-modal-summary-front",
-                                         options=[{
-                                                 'label':i,
-                                                 'value':i}for i in df_model['MODEL'].unique()],
-                                          placeholder="Select MODEL - second",
-                                          style={'height': '300%', 'width': '100%','fontSize':'1.7rem'},
-                                          multi = True,
-                                          value=[] )
-                                                ], className='six columns')
-                                          ]  , className="row" ) ,
-
-
-                            dcc.Graph(id='model_summary_dataset-front',animate=True, style={'width': '100%','margin-top': '22px'} )
-                                        ] ),
-                            html.P(
-                                children="RECORDS ",style={"margin-left": "4%",'fontSize':'1.5rem','color':'blue',"margin-bottom": "0%"},
-                                className="card-text",
-                            ),
-                            dbc.Button("Open App", id="openfour",  color='primary', style={'margin': '0px', 'width': '100%'}),
-                            dbc.Modal(
-                                [   dbc.ModalBody(model_summary_dataset),
-                                    dbc.ModalFooter(
-                                    dbc.Button("Close", id="closefour", className="ml-auto",outline=True,color="danger",block=True)
-                                    ),
-                                ],
-                                id="modalfour",size="xl"
-                            ),
-                        ]
-                    ),
-                ],
-                style={"width": "70rem",'background-color':'rgb(176,196,222)'},
-            )     ],className='six columns'),
-                                           ], className="row",  style={"margin": "38px 40px"}       )  ,
-
-            html.Div(
-            [
-                dbc.Card(
-                        [
-                        #dbc.CardImg(src="logo.png", top=True),
-                        dbc.CardBody(
-                            [   html.Div([
-                                html.H2(children="BERT METRICS ANALYSIS", style={"margin-left": "0%",'fontSize':'2.5rem','font-family':'Trocchi, serif','color':'blue'},className="card-title"),
-                                dcc.Dropdown(id="entity_dropdown_2",
+            html.Div([  dbc.Card(
+                             [  #dbc.CardImg(src="logo.png", top=True),
+                                 dbc.CardBody(
+                                     [   html.Div([
+                                             html.H1(children="MODEL SUMMARY",style={"margin-left": "4%",'fontSize':'2.5rem','font-family': 'Trocchi, serif','color':'blue'},className="card-title"),
+                                             dcc.Dropdown(
+                                                        id="model_name_front",
                                                         options=[{
-                                                                'label':i,
-                                                                'value':i}for i in df['Entity'].unique()],
-                                                                            placeholder="Select entity",
-                                                            style={'height': '300%', 'width': '100%'},
-                                                            multi = True,
-                                                            value=['ActionTaken','Dosage'] ),
-                                html.Div([
-                                html.P(
-                                    children="RECORDS ",style={"margin-left": "0%",'fontSize':'2.5rem','font-family':'Trocchi, serif','color':'blue'},className="card-title"),
-
-
-                                html.Div(
-                                dcc.Dropdown(id="entity_dropdown_dataset",
-                                                        options=[{
-                                                                'label':i,
-                                                                'value':i}for i in df['Total_Records'].unique()],
-                                                            placeholder="Select entity",
-                                                            style={'height': '300%', 'width': '100%'},
-                                                            value=['ActionTaken','Dosage'] ) ,className='four columns'  ,   style={"margin": "9px 0px"}    ),
-
-                            #    html.P(
-                            #        children="METRICS ",style={"margin": "18px 18px",'fontSize':'1.5rem','color':'blue',"font-weight":"bold"},
-                            #        className="card-text",
-                            #    ),
-                                html.Div(
-                                dbc.FormGroup([
-                                        dbc.Checklist(
-                                            options=[
-                                                {"label": "Precision", "value":'Precision'},
-                                                {"label": "Recall", "value":'Recall'},
-                                                {"label": "F1", "value":'F1'}
+                                                                'label': "Model A",
+                                                                'value': "Model A"},
+                                                                {"label": "Model B","value": "Model B"}
+                                                                ],
+                                                                placeholder="Select model",
+                                                        style={'height': '300%', 'width': '100%'},
+                                                        multi = True,
+                                                        value=['Model A']),
+                                        dcc.Graph(id='model_summary_front',animate=True,style={'margin':'20px 0px'}          )  ]),
+                                        html.P(
+                                            children="The Consolidated Training Results summary of models have been plotted",style={"margin-left": "4%",'fontSize':'1.5rem','color':'red'},
+                                            className="card-text",
+                                        ),
+                                        dbc.Button("Open App", id="opentwo", color='primary', style={'margin': 'auto', 'width': '100%', "margin":"30px 0px"}),
+                                        dbc.Modal(
+                                            [
+                                            #    dbc.ModalHeader("Modal"),
+                                                dbc.ModalBody(DropdownApp_model),
+                                                dbc.ModalFooter(
+                                                    dbc.Button("Close", id="closetwo", className="ml-auto",outline=True,color="danger",block=True)
+                                                ),
                                             ],
-                                            value=[],
-                                            id="switches-inline-input-dataset",
-                                            style={'height': '300%', 'width': '100%','fontSize':'1.7rem'},
-                                            inline=True,
-                                            switch=True,
+                                            id="modaltwo",size="xl"
                                         ),
                                     ]
-                                )  ,className='six columns' , style={"margin": "9px 18px"}   ) ], className="row"    ),
-
-                                dcc.Graph(id='entity_graph_front_dataset',animate=True, style={'width': '100%'})  ,
-                                html.P(
-                                    children="ENTITIES - Precision, F1, Recall scores based on varying RECORDS ",style={"margin-left": "4%",'fontSize':'1.5rem','color':'blue'},
-                                    className="card-text",
                                 ),
-                                dbc.Button("Open App", id="openfive",color='warning', style={'margin':'20px','width':'90%'}),
-                                dbc.Modal(
-                                    [   dbc.ModalBody(DropdownApp_entity_data),
-                                        dbc.ModalFooter(
-                                            dbc.Button("Close", id="closefive", className="ml-auto",outline=True,color="danger",block=True)
-                                        ),
-                                    ],
-                                    id="modalfive",size="xl"
-                                ),
-                            ]
-                        ),
-                    ],
-                    style={"width": "145rem","height":"75rem",'background-color':'rgb(176,196,222)'},
-                )     ],className='twelve columns')       ], className="row",  style={"margin": "38px 40px"}  )
+                            ],
+                            style={"width": "70rem","height":"73rem",'background-color':'rgb(176,196,222)' },
+                        )  ],className='six columns')
 
-                ]) ], className='ten columns offset-by-one')],
+
+
+                                           ], className="row",  style={"margin": "38px 40px"}       )  ,
+
+                ]) ], className='ten columns offset-by-one')   ],
 ), style={"background-color": "rgb(220,220,220)"})
 
 
@@ -596,6 +523,61 @@ def update_figure(dropdown,toggle):
                                       )
     return figure
 
+#card four - MODEL SUMMARY BASED ON RECORDS
+@app.callback(
+    dash.dependencies.Output('model_summary_dataset-front','figure'),
+    [
+    dash.dependencies.Input('switches-inline-input-dataset-summary-front','value'),
+    dash.dependencies.Input('switches-inline-input-modal-summary-front','value'),
+    dash.dependencies.Input('radioitems-input','value'),
+                          ] )
+
+def modelsummarydatasetfront(dataset,model,split):
+    print(split)
+    print("njnkbttttttttttttttttttttttttt")
+    print("\n\n\n\n\n\n")
+    print("\n\n\n\n\n\n")
+    #print(type(dropdown))
+    print(dataset)
+    data_select=[]
+    metrics=['Precision','Recall','F1']
+    split_list=['TRAIN','VAL','TEST']
+    total_df =df_model.groupby('TOTAL RECORDS')
+    for n,g in total_df:
+        if n == dataset:
+            #print(min_df[i])df
+            g=df_model[df_model['TOTAL RECORDS'] == dataset]
+            print("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
+            print(g)
+            #x=g[g['Entity'] == value]['Total_Records']
+            if split=='data_split':
+                print("yessssssssssssssssssssssssssssssssssssssssssssssssssssssss")
+                for i in split_list:
+                    for index,value in enumerate(model):
+                        data_select.append(go.Bar(x=g['TOTAL RECORDS'] ,y=g[g['MODEL'] == value][i],text=("{0} {1}".format(value,i)),name=("{0} {1}".format(value,i)),textposition='auto',marker=dict(color = colors[index] ,line=dict(color='rgb(8,48,107)'))))
+
+            elif split=='no':
+                for j in metrics:
+                    for index,value in enumerate(model):
+                        data_select.append(go.Bar(x=g['TOTAL RECORDS'] ,y=g[g['MODEL'] == value][j],text=("{0} {1}".format(value,j)),name=("{0} {1}".format(value,j)),textposition='auto',marker=dict(color = colors[index] ,line=dict(color='rgb(8,48,107)'))))
+
+
+    figure=dict(
+                            data=data_select,
+                            layout=go.Layout(title='EVALUATION METRICS',
+                                   colorway=["#EF963B", "#EF533B"],hovermode="closest",
+                                    xaxis={'title': "Records",
+                                           'titlefont':{'color': 'black','size': 20},
+                                           'tickfont':{'color': 'black','size': 20 } },
+                                   yaxis={'title': "ACCURACY",
+                                          'titlefont':{'color': 'black','size': 20},
+                                          'tickfont':{'color': 'black','size': 20 } },
+                                   legend={'x': 1, 'y':1 }
+                                           )
+                                          )
+    return figure
+
+
 # modal card one - BERT METRICS ANALYSIS
 @app.callback(
     dash.dependencies.Output('model_summary_dataset-front-modal','figure'),
@@ -667,59 +649,7 @@ def modelsummarydatasetfrontmodal(dataset,model,split):
 
 
 
-#card four - MODEL SUMMARY BASED ON RECORDS
-@app.callback(
-    dash.dependencies.Output('model_summary_dataset-front','figure'),
-    [
-    dash.dependencies.Input('switches-inline-input-dataset-summary-front','value'),
-    dash.dependencies.Input('switches-inline-input-modal-summary-front','value'),
-    dash.dependencies.Input('radioitems-input','value'),
-                          ] )
 
-def modelsummarydatasetfront(dataset,model,split):
-    print(split)
-    print("njnkbttttttttttttttttttttttttt")
-    print("\n\n\n\n\n\n")
-    print("\n\n\n\n\n\n")
-    #print(type(dropdown))
-    print(dataset)
-    data_select=[]
-    metrics=['Precision','Recall','F1']
-    split_list=['TRAIN','VAL','TEST']
-    total_df =df_model.groupby('TOTAL RECORDS')
-    for n,g in total_df:
-        if n == dataset:
-            #print(min_df[i])df
-            g=df_model[df_model['TOTAL RECORDS'] == dataset]
-            print("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
-            print(g)
-            #x=g[g['Entity'] == value]['Total_Records']
-            if split=='data_split':
-                print("yessssssssssssssssssssssssssssssssssssssssssssssssssssssss")
-                for i in split_list:
-                    for index,value in enumerate(model):
-                        data_select.append(go.Bar(x=g['TOTAL RECORDS'] ,y=g[g['MODEL'] == value][i],text=("{0} {1}".format(value,i)),name=("{0} {1}".format(value,i)),textposition='auto',marker=dict(color = colors[index] ,line=dict(color='rgb(8,48,107)'))))
-
-            elif split=='no':
-                for j in metrics:
-                    for index,value in enumerate(model):
-                        data_select.append(go.Bar(x=g['TOTAL RECORDS'] ,y=g[g['MODEL'] == value][j],text=("{0} {1}".format(value,j)),name=("{0} {1}".format(value,j)),textposition='auto',marker=dict(color = colors[index] ,line=dict(color='rgb(8,48,107)'))))
-
-
-    figure=dict(
-                            data=data_select,
-                            layout=go.Layout(title='EVALUATION METRICS',
-                                   colorway=["#EF963B", "#EF533B"],hovermode="closest",
-                                    xaxis={'title': "Records",
-                                           'titlefont':{'color': 'black','size': 20},
-                                           'tickfont':{'color': 'black','size': 20 } },
-                                   yaxis={'title': "ACCURACY",
-                                          'titlefont':{'color': 'black','size': 20},
-                                          'tickfont':{'color': 'black','size': 20 } },
-                                   legend={'x': 1, 'y':1 }
-                                           )
-                                          )
-    return figure
 
 
 #CARD 2 - MODEL SUMMARY
@@ -747,7 +677,8 @@ def model_sum(model_name):
     return model_figure
 
 
-#CARD 3 - modal card one - BERT METRICS ANALYSIS
+
+# modal card one - BERT METRICS ANALYSIS
 
 @app.callback(
     dash.dependencies.Output('entity_graph','figure'),
@@ -843,11 +774,11 @@ def toggle_modal(n1,n2,is_open):
     return is_open
 
 #Module four
+#Module one
 @app.callback(
-    dash.dependencies.Output("modalfour","is_open"),
-    [dash.dependencies.Input("openfour","n_clicks"),
-    dash.dependencies.Input("closefour","n_clicks")],
-    [dash.dependencies.State("modalfour","is_open")],
+    dash.dependencies.Output("modalfour", "is_open"),
+    [dash.dependencies.Input("openfour", "n_clicks"), dash.dependencies.Input("closefour", "n_clicks")],
+    [dash.dependencies.State("modalfour", "is_open")],
 )
 def toggle_modal(n1,n2,is_open):
     if n1 or n2:
@@ -857,14 +788,13 @@ def toggle_modal(n1,n2,is_open):
 
 @app.callback(
     dash.dependencies.Output("modalfive","is_open"),
-    [dash.dependencies.Input("openfive","n_clicks"), dash.dependencies.Input("closefour","n_clicks")],
+    [dash.dependencies.Input("openfive","n_clicks"), dash.dependencies.Input("closefive","n_clicks")],
     [dash.dependencies.State("modalfive","is_open")],
 )
 def toggle_modal(n1,n2,is_open):
     if n1 or n2:
         return not is_open
     return is_open
-
 
 if __name__ == '__main__':
     app.run_server(debug=True)
