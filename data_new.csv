@@ -1,6 +1,0 @@
-Data Type, #Count,Data Type, #Count,,Results,Model A,Model B
-TOTAL RECORDS,33141,TOTAL RECORDS,33141,,Precision,71.26%,50.29%
-TRAIN,28141,TRAIN,28141,,Recall,50.30%,58.93%
-VAL,3500,VAL,3500,,F1,58.97%,54.27%
-TEST,1500,TEST,1500,,,,
-Training Epochs,50,Training Epochs,50,,,,
