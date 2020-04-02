@@ -23,7 +23,7 @@ external_stylesheets=[
         'crossorigin': 'anonymous'},
          dbc.themes.BOOTSTRAP  ]
 
-app = dash.Dash(__name__,external_stylesheets=external_stylesheets,suppress_callback_exceptions = True)
+app = dash.Dash()
 server = app.server
 
 model_summary_dataset= html.Div( [
