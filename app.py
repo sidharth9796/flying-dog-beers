@@ -6,11 +6,11 @@ import plotly.graph_objs as go
 import pandas as pd
 import os
 from random import randrange
-df_metrics = pd.read_csv('https://raw.githubusercontent.com/sidharth9796/plotly-dash-drive/master/BERT_metrics_analysis.csv/bert_spacy_metrics.csv')
-df_count=pd.read_csv('https://raw.githubusercontent.com/sidharth9796/plotly-dash-drive/master/BERT_metrics_analysis.csv/entity_count.csv')
+df_metrics = pd.read_csv('https://raw.githubusercontent.com/sidharth9796/plotly-dash-drive/master/bert_spacy_metrics.csv')
+df_count=pd.read_csv('https://raw.githubusercontent.com/sidharth9796/plotly-dash-drive/master/entity_count.csv')
 
-df_1 = pd.read_csv('https://raw.githubusercontent.com/sidharth9796/plotly-dash-drive/master/BERT_metrics_analysis.csv/entity_count.csv')
-df_2 = pd.read_csv('https://raw.githubusercontent.com/sidharth9796/plotly-dash-drive/master/BERT_metrics_analysis.csv/data_new.csv')
+df_1 = pd.read_csv('https://raw.githubusercontent.com/sidharth9796/plotly-dash-drive/master/entity_count.csv')
+df_2 = pd.read_csv('https://raw.githubusercontent.com/sidharth9796/plotly-dash-drive/master/data_new.csv')
 
 df_model=pd.read_csv('/home/drive/neuralcoref/datarecords.csv')
 #df_summary=pd.read_csv('model_summary.csv')
