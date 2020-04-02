@@ -10,10 +10,10 @@ df_metrics = pd.read_csv('https://raw.githubusercontent.com/sidharth9796/plotly-
 df_count=pd.read_csv('https://raw.githubusercontent.com/sidharth9796/plotly-dash-drive/master/entity_count.csv')
 
 df_1 = pd.read_csv('https://raw.githubusercontent.com/sidharth9796/plotly-dash-drive/master/entity_count.csv')
-df_2 = pd.read_csv('https://raw.githubusercontent.com/sidharth9796/plotly-dash-drive/master/data_new.csv')
 
-df_model=pd.read_csv('/home/drive/neuralcoref/datarecords.csv')
-#df_summary=pd.read_csv('model_summary.csv')
+
+df_model=pd.read_csv('https://raw.githubusercontent.com/sidharth9796/plotly-dash-drive/master/datarecords.csv')
+
 
 external_stylesheets=[
     'https://codepen.io/chriddyp/pen/bWLwgP.css',
