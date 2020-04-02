@@ -22,8 +22,7 @@ external_stylesheets=[
         'integrity': 'sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO',
         'crossorigin': 'anonymous'},
          dbc.themes.BOOTSTRAP  ]
-
-app = dash.Dash()
+app = dash.Dash(__name__,external_stylesheets=external_stylesheets,suppress_callback_exceptions = True)
 server = app.server
 
 model_summary_dataset= html.Div( [
