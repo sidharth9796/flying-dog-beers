@@ -6,14 +6,14 @@ import plotly.graph_objs as go
 import pandas as pd
 import os
 from random import randrange
-df_metrics = pd.read_csv('https://raw.githubusercontent.com/sidharth9796/plotly-dash-drive/master/bert_spacy_metrics.csv')
-df_count=pd.read_csv('https://raw.githubusercontent.com/sidharth9796/plotly-dash-drive/master/entity_count.csv')
+df_metrics = pd.read_csv('/home/drive/neuralcoref/bert_spacy_metrics.csv')
+df_count=pd.read_csv('/home/drive/neuralcoref/entity_count.csv')
 
-df_1 = pd.read_csv('https://raw.githubusercontent.com/sidharth9796/plotly-dash-drive/master/entity_count.csv')
+df_1 = pd.read_csv('/home/drive/neuralcoref/entity_count.csv')
+df_2 = pd.read_csv('/home/drive/neuralcoref/data_new.csv')
 
-
-df_model=pd.read_csv('https://raw.githubusercontent.com/sidharth9796/plotly-dash-drive/master/datarecords.csv')
-
+df_model=pd.read_csv('/home/drive/neuralcoref/datarecords.csv')
+#df_summary=pd.read_csv('model_summary.csv')
 
 external_stylesheets=[
     'https://codepen.io/chriddyp/pen/bWLwgP.css',
@@ -22,17 +22,28 @@ external_stylesheets=[
         'integrity': 'sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO',
         'crossorigin': 'anonymous'},
          dbc.themes.BOOTSTRAP  ]
-app = dash.Dash(__name__,external_stylesheets=external_stylesheets,suppress_callback_exceptions = True)
-server = app.server
 
-model_summary_dataset= html.Div( [
+app = dash.Dash(__name__,external_stylesheets=external_stylesheets,suppress_callback_exceptions = True)
+
+DropdownApp_model_summary_dataset= html.Div( [
         dbc.Card( [
                 #dbc.CardImg(src="logo.png", top=True),
                 dbc.CardBody(
                 [   html.Div([
-                    html.H2(children="MODEL SUMMARY BASED ON RECORDS", style={"margin-left": "4%",'fontSize':'2.5rem',"font-weight":"bold",'font-family':'Trocchi, serif','color':'rgb(0,0,128)'}, className="card-title"),
+                    html.H2(children="MODEL SUMMARY ", style={"margin-left": "4%",'fontSize':'2.5rem',"font-weight":"bold",'font-family':'Trocchi, serif','color':'rgb(0,0,128)'}, className="card-title"),
+                    html.Div([
+                        html.Div([
+                            dcc.Dropdown( id="switches-inline-input-modal-summary-front_modal_2",
+                                          options=[{
+                                          'label':i,
+                                           'value':i}for i in df_model['MODEL'].unique()],
+                                         placeholder="Select MODEL ",
+                                         style={'height': '300%', 'width': '100%','fontSize':'1.7rem'},
+                                         multi = True,
+                                         value=[] )
+                                            ], className='nine columns')
+                                                      ],style={"margin-left":"1%"} , className="row" ) ,
                     dbc.FormGroup([
-                            dbc.Label("Metrics",style={'fontSize':'2rem'},),
                             dbc.Checklist(
                                 options=[
                                     {"label": "Precision", "value":'Precision'},
@@ -41,39 +52,13 @@ model_summary_dataset= html.Div( [
                                 ],
                                 value=[],
                                 id="switches-inline-input-model-metrics-summary_modal_2",
-                                style={'height': '300%', 'width': '100%','fontSize':'1.7rem'},
+                                style={'height': '300%', 'width': '100%','fontSize':'1.7rem',"margin-top":"1%","margin-left":"1%"},
                                 inline=True,
                                 switch=True,
                             ),
                         ]
                     ),
-
-                    html.Div([
-                        html.Div([
-                          html.P(
- children="Select Records",style={"margin-left": "0%",'fontSize':'1.5rem',"font-weight":"bold","margin-left": "4%",'font-family':'Trocchi, serif','color':'rgb(47,79,79)'},className="card-title"),
-                        dcc.Dropdown( id="switches-inline-input-dataset-summary-front_modal_2",
-                                      options=[{
-                                                'label':i,
-                                                'value':i}for i in df_model['TOTAL RECORDS'].unique()],
-                                    placeholder="Select DATASET - first",
-                                    style={'height': '300%', 'width': '100%','fontSize':'1.7rem',"margin-left": "2%"},
-                                    value=[] )  ] ,className='six columns' )  ,
-
-                        html.Div([
-                            html.P(
-                     children="Select Model ",style={"margin-left": "0%",'fontSize':'1.5rem',"font-weight":"bold" , 'font-family':'Trocchi, serif','color':'rgb(47,79,79)'},className="card-title"),
-                            dcc.Dropdown( id="switches-inline-input-modal-summary-front_modal_2",
-                                          options=[{
-                                          'label':i,
-                                           'value':i}for i in df_model['MODEL'].unique()],
-                                         placeholder="Select MODEL - second",
-                                         style={'height': '300%', 'width': '100%','fontSize':'1.7rem'},
-                                         multi = True,
-                                         value=['BERT','SPACY'] )
-                                            ], className='six columns')
-                                                      ]  , className="row" ) ,
-                                            dcc.Graph(id='model_summary_dataset-front_modal_2',animate=True, style={"backgroundColor": "#1a2d46",'color':'#ffffff','width':"110rem","height":"100rem"} ) ]) ]) ]) ])
+                dcc.Graph(id='model_summary_dataset-front_modal_2',animate=True, style={"backgroundColor": "#1a2d46",'color':'#ffffff','width':"110rem","height":"90rem"} ) ]) ]) ]) ])
 
 
 
@@ -146,6 +131,62 @@ app.layout = html.Div(
         html.Div([
               html.Div([
 
+#card1
+              html.Div(
+                  [
+                  dbc.Card(
+                  [
+              #dbc.CardImg(src="logo.png", top=True),
+                    dbc.CardBody(
+                          [ html.Div([
+                              html.H2(children="MODEL SUMMARY ", style={"margin-left": "0%",'fontSize':'2.5rem','font-family':'Trocchi, serif','color':'blue',},className="card-title"),
+                                dcc.Dropdown(id="switches-inline-input-model-dropdown-front",
+                                             options=[{
+                                                  'label':i,
+                                                  'value':i}for i in df_model['MODEL'].unique()],
+                                                   placeholder="Select Model",
+                                                  style={'height': '300%', 'width': '100%'},
+                                                  multi = True,
+                                                  value=[] ),
+                                  dbc.FormGroup([
+                                          dbc.Label("Metrics",style={'fontSize':'2rem'},),
+                                          dbc.Checklist(
+                                              options=[
+                                                  {"label": "Precision", "value":'Precision'},
+                                                  {"label": "Recall", "value":'Recall'},
+                                                  {"label": "F1", "value":'F1'}
+                                                      ],
+                                                                  value=[],
+                                                                  id="switches-inline-input-metrics-dropdown-front",
+                                                                  style={'height': '300%', 'width': '100%','fontSize':'1.7rem'},
+                                                                  inline=True,
+                                                                  switch=True,
+                                                              ),
+                                                          ]
+                                                      ),
+                                                      dcc.Graph(id='model_graph_front',animate=True, style={'width': '100%'})  ,
+
+                                                      html.P(
+                                                          children="ENTITIES - Precision, F1, Recall scores ",style={"margin-left": "4%",'fontSize':'1.5rem','color':'blue'},
+                                                          className="card-text",
+                                                      ),
+                                                      dbc.Button("Open App", id="opentwo",  color='warning', style={'margin': 'auto', 'width': '100%'}),
+                                                      dbc.Modal(
+                                                          [
+                                                              dbc.ModalBody(DropdownApp_model_summary_dataset),
+                                                              dbc.ModalFooter(
+                                                                  dbc.Button("Close", id="closetwo", className="ml-auto",outline=True,color="danger",block=True)
+                                                              ),
+                                                          ],
+                                                          id="modaltwo",size="xl"
+                                                      ),
+                                                  ]
+                                              ),
+                                          ],
+                                          style={"width": "134rem","height":"75rem",'background-color':'rgb(176,196,222)'},
+                                      )     ],className='six columns')
+                                              ], className="row",  style={"margin": "38px 40px"}  ),
+#card 2
 
             html.Div(
             [
@@ -222,81 +263,6 @@ app.layout = html.Div(
                 style={"width": "134rem","height":"75rem",'background-color':'rgb(176,196,222)'},
             )
      ],className='nine columns')       ], className="row",  style={"margin": "38px 40px"}  ) ,
-
-#card 2
-            html.Div(
-            [
-                dbc.Card(
-                        [
-                        #dbc.CardImg(src="logo.png", top=True),
-                dbc.CardBody(
-                [   html.Div([
-                    html.H2(children="MODEL SUMMARY BASED ON RECORDS", style={"margin-left": "0%",'fontSize':'2.5rem',"font-weight":"bold",'font-family':'Trocchi, serif','color':'rgb(0,0,128)'}, className="card-title"),
-
-
-                    dbc.FormGroup([
-                            dbc.Label("Metrics",style={'fontSize':'2rem'},),
-                            dbc.Checklist(
-                                options=[
-                                    {"label": "Precision", "value":'Precision'},
-                                    {"label": "Recall", "value":'Recall'},
-                                    {"label": "F1", "value":'F1'}
-                                ],
-                                value=[],
-                                id="switches-inline-input-model-metrics-summary",
-                                style={'height': '300%', 'width': '100%','fontSize':'1.7rem'},
-                                inline=True,
-                                switch=True,
-                            ),
-                        ]
-                    ),
-
-                    html.Div([
-                        html.Div([
-                          html.P(
- children="Select Records",style={"margin-left": "0%",'fontSize':'1.5rem',"font-weight":"bold","margin-left": "4%",'font-family':'Trocchi, serif','color':'rgb(47,79,79)'},className="card-title"),
-                        dcc.Dropdown( id="switches-inline-input-dataset-summary-front",
-                                      options=[{
-                                                'label':i,
-                                                'value':i}for i in df_model['TOTAL RECORDS'].unique()],
-                                    placeholder="Select DATASET - first",
-                                    style={'height': '300%', 'width': '100%','fontSize':'1.7rem',"margin-left": "1%"},
-                                    value=[] )  ] ,className='six columns' )  ,
-
-                        html.Div([
-                            html.P(
-                     children="Select Model ",style={"margin-left": "0%",'fontSize':'1.5rem',"font-weight":"bold" , 'font-family':'Trocchi, serif','color':'rgb(47,79,79)'},className="card-title"),
-                            dcc.Dropdown( id="switches-inline-input-modal-summary-front",
-                                          options=[{
-                                          'label':i,
-                                           'value':i}for i in df_model['MODEL'].unique()],
-                                         placeholder="Select MODEL - second",
-                                         style={'height': '300%', 'width': '100%','fontSize':'1.7rem'},
-                                         multi = True,
-                                         value=['BERT','SPACY'] )
-                                            ], className='six columns')
-                                                      ]  , className="row" ) ,
-                                            dcc.Graph(id='model_summary_dataset-front',animate=True, style={'width': '100%','margin-top': '22px'} )
-                                                        ] ),
-                                            html.P(
-                                            children="ENTITIES - Precision, F1, Recall scores ",style={"margin-left": "4%",'fontSize':'1.5rem','color':'blue'},
-                                                className="card-text",
-                                                                        ),
-                                            dbc.Button("Open App", id="opentwo",  color='primary', style={'margin': '0px', 'width': '100%'}),
-                                            dbc.Modal(
-                                                [   dbc.ModalBody(model_summary_dataset),
-                                                    dbc.ModalFooter(
-                                                    dbc.Button("Close", id="closetwo", className="ml-auto",outline=True,color="danger",block=True)
-                                                    ),
-                                                ],
-                                                id="modaltwo",size="xl"
-                                            ),
-                                        ],
-            style={"width": "134rem","height":"75rem",'background-color':'rgb(176,196,222)'}
-                                    ),
-     ],className='nine columns')       ], className="row",  style={"margin": "38px 40px"}  )
-     ,
-
 #card 3
             html.Div(
             [
@@ -344,10 +310,10 @@ app.layout = html.Div(
 ), style={"background-color": "rgb(220,220,220)"})
 
 
-colors_entity_term=['rgb(139,69,19)','rgb(72,61,139)','rgb(139,0,139)','rgb(47,79,79)','rgb(0,100,0)','rgb(255,69,0)','rgb(128,0,0)','rgb(255,255,0)','rgb(0,128,128)','rgb(255,140,0)','rgb(0,128,128)','rgb(188,143,143)']
-colors_entity=[['rgb((70,130,180)','rgb(70,130,180)','rgb(0,191,255)','rgb(25,25,112)'],['rgb(0,128,0)','rgb(0,100,0)','rgb(46,139,87)','rgb(136,255,77)']]
-colors=['rgb(100,149,237)','rgb(188,143,143)','rgb(244,164,96)','rgb(65,105,225)','rgb(255,140,0)','rgb(55, 83, 109)','rgb(135,206,250)','rgb(192,192,192)','rgb(245,222,179)','rgb(255,228,225)','rgb(128,128,128)','rgb(0,128,128)','rgb(152,251,152)','rgb(220,20,60)','rgb(107,142,35)','rgb(221,160,221)','rgb(244,164,96)','rgb(128,0,0)','rgb(250,250,210)','rgb(245,255,250)']
-#CARD 1 BERT METRICS ANALYSIS
+colors_entity_term=['rgb(25,25,112)','rgb(139,69,19)','rgb(72,61,139)','rgb(139,0,139)','rgb(47,79,79)','rgb(0,100,0)','rgb(255,69,0)','rgb(128,0,0)','rgb(255,255,0)','rgb(0,128,128)','rgb(255,140,0)','rgb(0,128,128)','rgb(188,143,143)']
+colors_entity=[['rgb(25,25,112)','rgb(25,25,112)','rgb(0,191,255)','rgb(70,130,180)'],['rgb(0,128,0)','rgb(0,100,0)','rgb(136, 204, 0)','rgb(179, 255, 179)']]
+colors=['rgb(25,25,112)','rgb(244,164,96)','rgb(188,143,143)','rgb(55, 83, 109)','rgb(227,38,54)','rgb(135,206,250)','rgb(0,128,0)','rgb(245,222,179)','rgb(178,132,190)','rgb(128,128,128)','rgb(0,128,128)','rgb(152,251,152)','rgb(102, 51, 0)','rgb(107,142,35)','rgb(221,160,221)','rgb(244,164,96)','rgb(128,0,0)','rgb(250,250,210)','rgb(245,255,250)']
+#CARD 2 BERT METRICS ANALYSIS
 @app.callback(
     dash.dependencies.Output('entity_graph_front','figure'),
     [dash.dependencies.Input('entity_dropdown_front','value'),
@@ -397,7 +363,7 @@ def update_figure(dropdown,model,toggle):
 
 
 
-# modal card one - BERT METRICS ANALYSIS
+# modal card two - BERT METRICS ANALYSIS
 
 @app.callback(
     dash.dependencies.Output('entity_graph_modal_1','figure'),
@@ -440,7 +406,7 @@ def update_figure(dropdown_modal_1,model_modal_1,toggle_modal_1):
 
 
 
-#Module one
+#Module two
 @app.callback(
     dash.dependencies.Output("modalone", "is_open"),
     [dash.dependencies.Input("openone", "n_clicks"), dash.dependencies.Input("closeone", "n_clicks")],
@@ -451,104 +417,85 @@ def toggle_modal(n1,n2,is_open):
         return not is_open
     return is_open
 
-#CARD 2
+#CARD 1
 @app.callback(
-    dash.dependencies.Output('model_summary_dataset-front','figure'),
+    dash.dependencies.Output('model_graph_front','figure'),
     [
-    dash.dependencies.Input('switches-inline-input-model-metrics-summary','value'),
-    dash.dependencies.Input('switches-inline-input-dataset-summary-front','value'),
-    dash.dependencies.Input('switches-inline-input-modal-summary-front','value')
+    dash.dependencies.Input('switches-inline-input-model-dropdown-front','value'),
+    dash.dependencies.Input('switches-inline-input-metrics-dropdown-front','value')
     ] )
-def modelsummarydatasetfront(metrics,dataset,model):
-    print("njnkbttttttttttttttttttttttttt")
+def modelsummarydatasetfront(model,metrics):
+    print("\n\n\n\n\n\n")
     print(metrics)
     print("\n\n\n\n\n\n")
     #print(type(dropdown))
-    print(dataset)
+    print(len(model))
+    print(model)
     data_select=[]
-    #metrics=['Precision','Recall','F1']
-    total_df =df_model.groupby('TOTAL RECORDS')
-    for n,g in total_df:
-        if n == dataset:
-            #print(min_df[i])df
-            r=randrange(10)
-            #g=df_model[df_model['TOTAL RECORDS'] == dataset]
-            print("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
-            print(g)
-            color_index=0
-            #x=g[g['Entity'] == value]['Total_Records']
-            for j in metrics:
-                color_index=color_index+1
-                for index,value in enumerate(model):
-                    data_select.append(go.Bar(x=g['TOTAL RECORDS'],y=g[g['MODEL'] == value][j],text=("{0}{1}".format(value,j)),name=("{0}{1}".format(value,j)),textposition='auto',marker=dict(color=colors_entity[index][color_index],line=dict(color='rgb(70,130,180)'))))
+    color_index=0
+    for j in metrics:
+        color_index = color_index+1
+        for index,value in enumerate(model):
+            data_select.append(go.Bar(x=df_model[df_model['MODEL']==value]['TOTAL RECORDS'],y=df_model[df_model['MODEL'] == value][j],text=("{0} {1}".format(value,j)),name=("{0} {1}".format(value,j)),textposition='auto',marker=dict(color=colors_entity[index][color_index] ,line=dict(color='rgb(8,48,107)'))))
+    print(data_select)
 
-                    print("\n\nthe data select is \n")
-                    print(data_select)
+    print("-----------------------------------------------------")
 
     figure=dict(
-                            data=data_select,
-                            layout=go.Layout(title='EVALUATION METRICS',
-                                   colorway=["#EF963B", "#EF533B"],hovermode="closest",
-                                    xaxis={'title': "Records",
-                                           'titlefont':{'color': 'black','size': 20},
-                                           'tickfont':{'color': 'black','size': 20 } },
-                                   yaxis={'title': "ACCURACY",
-                                          'titlefont':{'color': 'black','size': 20},
-                                          'tickfont':{'color': 'black','size': 20 } },
-
-                                           )
-                                          )
+            data=data_select,
+            layout=go.Layout(title='EVALUATION METRICS',
+                               colorway=["#EF963B", "#EF533B"],hovermode="closest",
+                                xaxis={'title': "RECORDS",
+                                       'titlefont':{'color': 'black','size': 20},
+                                       'tickfont':{'color': 'black','size': 20 } },
+                               yaxis={'title': "ACCURACY",
+                                      'titlefont':{'color': 'black','size': 20},
+                                      'tickfont':{'color': 'black','size': 20 } },
+                               legend={'x': 1, 'y':1 }
+                                       )
+                                      )
     return figure
 
-#CARD 2 MODAL 2
+#CARD 1 MODAL 1
 @app.callback(
     dash.dependencies.Output('model_summary_dataset-front_modal_2','figure'),
     [
     dash.dependencies.Input('switches-inline-input-model-metrics-summary_modal_2','value'),
-    dash.dependencies.Input('switches-inline-input-dataset-summary-front_modal_2','value'),
     dash.dependencies.Input('switches-inline-input-modal-summary-front_modal_2','value')
     ] )
-def modelsummarydatasetfront(metrics,dataset,model):
+def modelsummarydatasetfront(metrics,model):
+    print("\n\n\n\n\n\n")
     print(metrics)
     print("\n\n\n\n\n\n")
     #print(type(dropdown))
-    print(dataset)
+    print(len(model))
+    print(model)
     data_select=[]
-    #metrics=['Precision','Recall','F1']
-    total_df =df_model.groupby('TOTAL RECORDS')
-    for n,g in total_df:
-        if n == dataset:
-            #print(min_df[i])df
-            r=randrange(10)
-            #g=df_model[df_model['TOTAL RECORDS'] == dataset]
-            print("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
-            print(g)
-            color_index=0
-            #x=g[g['Entity'] == value]['Total_Records']
-            for j in metrics:
-                color_index=color_index+1
-                for index,value in enumerate(model):
-                    data_select.append(go.Bar(x=g['TOTAL RECORDS'],y=g[g['MODEL'] == value][j],text=("{0}{1}".format(value,j)),name=("{0}{1}".format(value,j)),textposition='auto',marker=dict(color=colors_entity[index][color_index],line=dict(color='rgb(70,130,180)'))))
+    color_index=0
+    for j in metrics:
+        color_index=color_index+1
+        for index,value in enumerate(model):
+            data_select.append(go.Bar(x=df_model[df_model['MODEL']==value]['TOTAL RECORDS'],y=df_model[df_model['MODEL'] == value][j],text=("{0} {1}".format(value,j)),name=("{0} {1}".format(value,j)),textposition='auto',marker=dict(color=colors_entity[index][color_index] ,line=dict(color='rgb(8,48,107)'))))
+    print(data_select)
 
-                    print("\n\nthe data select is \n")
-                    print(data_select)
+    print("-----------------------------------------------------")
 
     figure=dict(
-                            data=data_select,
-                            layout=go.Layout(title='EVALUATION METRICS',
-                                   colorway=["#EF963B", "#EF533B"],hovermode="closest",
-                                    xaxis={'title': "Records",
-                                           'titlefont':{'color': 'black','size': 20},
-                                           'tickfont':{'color': 'black','size': 20 } },
-                                   yaxis={'title': "ACCURACY",
-                                          'titlefont':{'color': 'black','size': 20},
-                                          'tickfont':{'color': 'black','size': 20 } },
-
-                                           )
-                                          )
+            data=data_select,
+            layout=go.Layout(title='EVALUATION METRICS',
+                               colorway=["#EF963B", "#EF533B"],hovermode="closest",
+                                xaxis={'title': "RECORDS",
+                                       'titlefont':{'color': 'black','size': 20},
+                                       'tickfont':{'color': 'black','size': 20 } },
+                               yaxis={'title': "ACCURACY",
+                                      'titlefont':{'color': 'black','size': 20},
+                                      'tickfont':{'color': 'black','size': 20 } },
+                               legend={'x': 1, 'y':1 }
+                                       )
+                                      )
     return figure
 
-#Module Two
+#Module one
 @app.callback(
     dash.dependencies.Output("modaltwo","is_open"),
     [dash.dependencies.Input("opentwo","n_clicks"), dash.dependencies.Input("closetwo","n_clicks")],
@@ -645,3 +592,4 @@ def toggle_modal(n1,n2,is_open):
 
 if __name__ == '__main__':
     app.run_server(debug=True)
+
