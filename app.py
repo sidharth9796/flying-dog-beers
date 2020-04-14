@@ -13,9 +13,11 @@ df_1 = pd.read_csv('https://raw.githubusercontent.com/sidharth9796/plotly-dash-d
 
 
 df_model=pd.read_csv('https://raw.githubusercontent.com/sidharth9796/plotly-dash-drive/master/datarecords.csv')
+#df_summary=pd.read_csv('model_summary.csv')
 
 external_stylesheets=[
     'https://codepen.io/chriddyp/pen/bWLwgP.css',
+    'https://fonts.googleapis.com/css?family=Montserrat',
     {   'href': 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css',
         'rel': 'stylesheet',
         'integrity': 'sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO',
@@ -30,7 +32,7 @@ DropdownApp_model_summary_dataset= html.Div( [
                 #dbc.CardImg(src="logo.png", top=True),
                 dbc.CardBody(
                 [   html.Div([
-                    html.H2(children="MODEL SUMMARY ", style={"margin-left": "4%",'fontSize':'2.5rem',"font-weight":"bold",'font-family':'Trocchi, serif','color':'rgb(0,0,128)'}, className="card-title"),
+                    html.H2(children="MODEL SUMMARY ", style={"margin-left": "1%",'fontSize':'2.5rem',"font-weight":"bold",'font-family':'Trocchi, serif','color':'rgb(0,0,128)'}, className="card-title"),
                     html.Div([
                         html.Div([
                             dcc.Dropdown( id="switches-inline-input-modal-summary-front_modal_2",
@@ -58,43 +60,64 @@ DropdownApp_model_summary_dataset= html.Div( [
                             ),
                         ]
                     ),
-                dcc.Graph(id='model_summary_dataset-front_modal_2',animate=True, style={"backgroundColor": "#1a2d46",'color':'#ffffff','width':"110rem","height":"90rem"} ) ]) ]) ]) ])
+                dcc.Graph(id='model_summary_dataset-front_modal_2',animate=True, style={"backgroundColor": "#1a2d46",'color':'#ffffff','width':"178rem","height":"72rem"} ),
+                dbc.ModalFooter(
+                        dbc.Button("Close", id="closetwo", className="ml-auto",outline=True,color="danger",block=True)
+                                                                              ), ]) ]) ]) ], style={'width':"180rem","height":"90rem","margin-left":"-300px"})
 
 
 
-DropdownApp_entity = html.Div([
-    html.H1(children='Evaluation metrics',style={"margin-left":"4%",'fontSize':'3.0rem','font-family': 'Trocchi, serif','color':'blue'}),
-    dcc.Dropdown(id="entity_dropdown_modal_1",
-                options=[{
-                        'label': i,
-                        'value': i}for i in df_metrics['Entity'].unique()],
-                        placeholder="Select entity",
-                        style={'height': '300%', 'width': '100%','fontSize':'1.7rem'},
-                        multi = True,
-                        value=[]),
-    dcc.Dropdown(id="model_dropdown_modal_1",
-                 options=[{
-                    'label':i,
-                    'value':i}for i in df_metrics['MODEL'].unique()],
-                    placeholder="Select MODEL",
-                style={'height': '300%', 'width': '100%'},
-                    ),
-    dbc.FormGroup([
-            dbc.Label("Toggle Metrics",style={'fontSize':'2rem'}),
-            dbc.Checklist(
-                options=[
-                    {"label": "Precision", "value": 'Precision'},
-                    {"label": "Recall", "value":  'Recall'},
-                    {"label": "F1", "value": 'F1'}
-                ],
-                value=["Precision","Recall","F1"],
-                id="switches-inline-input-modal_1",
-                inline=True,
-                switch=True,
-            ),
-        ]
-    )  ,
-dcc.Graph(id='entity_graph_modal_1',animate=True,style={"backgroundColor": "#1a2d46",'color':'#ffffff','width':"110rem","height":"100rem"} ) ]  )
+DropdownApp_entity =html.Div( [
+        dbc.Card( [
+                #dbc.CardImg(src="logo.png", top=True),
+                dbc.CardBody(
+                [   html.Div([
+                    html.H2(children="Entity Level Metrics ", style={"margin-left": "0%",'fontSize':'2.5rem',"font-weight":"bold",'font-family':'Trocchi, serif','color':'rgb(0,0,128)'}, className="card-title"),
+
+
+                            dcc.Dropdown(id="entity_dropdown_modal_1",
+                                                    options=[{
+                                                            'label':i,
+                                                            'value':i}for i in df_metrics['Entity'].unique()],
+                                                                        placeholder="Select entity",
+                                                        style={'height': '100%', 'width': '86%'},
+                                                        multi = True,
+                                                        value=[] ),
+
+
+                            dbc.FormGroup([
+                                    dbc.Label("Metrics",style={'fontSize':'1.4rem'},),
+                                    dbc.Checklist(
+                                        options=[
+                                            {"label": "Precision", "value":'Precision'},
+                                            {"label": "Recall", "value":'Recall'},
+                                            {"label": "F1", "value":'F1'}
+                                        ],
+                                        value=["Precision","Recall","F1"],
+                                        id="switches-inline-input-modal_1",
+                                        style={'height': '150%', 'width': '100%','fontSize':'1.2rem'},
+                                        inline=True,
+                                        switch=True,
+                                    ),
+                                ]
+                            ),
+
+
+                            dcc.Dropdown(id="model_dropdown_modal_1",
+                                                    options=[{
+                                                            'label':i,
+                                                            'value':i}for i in df_metrics['MODEL'].unique()],
+                                                                        placeholder="Select MODEL",
+                                                        style={'height': '300%', 'width': '86%'},
+                                                        #value='BERT',
+                                                    #    clearable=False
+
+                                                       ),
+                dcc.Graph(id='entity_graph_modal_1',animate=True, style={"backgroundColor": "#1a2d46",'color':'#ffffff','width':"178rem","height":"72rem"} ),
+                dbc.ModalFooter(
+                        dbc.Button("Close", id="closeone", className="ml-auto",outline=True,color="danger",block=True)
+                                                                              ), ]) ]) ]) ], style={'width':"180rem","height":"90rem","margin-left":"-300px"})
+
 
 DropdownApp_model_term=  html.Div([
                   dbc.Card(
@@ -102,7 +125,7 @@ DropdownApp_model_term=  html.Div([
             #dbc.CardImg(src="logo.png", top=True),
             dbc.CardBody(
                 [   html.Div([
-                    html.H2(children="ENTITY SUMMARY", style={"margin-left": "4%",'fontSize':'2.5rem','font-family':'Trocchi, serif','color':'blue'}, className="card-title"),
+                    html.H2(children="ENTITY SUMMARY", style={"margin-left": "0%",'fontSize':'2.5rem','font-family':'Trocchi, serif','color':'blue'}, className="card-title"),
 
                           html.P(
                           children="Select Records",style={"margin-left": "0%",'fontSize':'2.5rem',"font-weight":"bold","margin-left": "0%",'font-family':'Trocchi, serif','color':'rgb(47,79,79)'},className="card-title"),
@@ -113,17 +136,17 @@ DropdownApp_model_term=  html.Div([
                                     placeholder="Select DATASET - first",
                                     style={'height': '300%', 'width': '98%','fontSize':'1.7rem',"margin-left": "0%"},
                                     value=[] )    ,
-                        dcc.Graph(id='dcc_entity_bottom_left_modal_3',animate=True, style={"backgroundColor": "#1a2d46",'color':'#ffffff','width':"110rem","height":"100rem"} )
-
-                                                   ]),
-
-        ])  ]) ])
+                        dcc.Graph(id='dcc_entity_bottom_left_modal_3',animate=True, style={"backgroundColor": "#1a2d46",'color':'#ffffff','width':"178rem","height":"70rem"} ),
+                        dbc.ModalFooter(
+                                dbc.Button("Close", id="closethree", className="ml-auto",outline=True,color="danger",block=True)
+                            )    ]),
+                                      ])  ]) ], style={'width':"180rem","height":"90rem","margin-left":"-300px"})
 
 
 app.layout = html.Div(
     html.Div([
         html.Div(
-            [  html.H1(children='Model Training Viewer',style={"margin-left": "10%",'fontSize':'4.5rem', 'font-family': 'Trocchi, serif' ,'color':'blue'},
+            [  html.H1(children='Training Dashboard',style={"margin-left": "5%",'fontSize':'4.5rem', 'font-family': 'Montserrat','color':'blue'},
                         className='six columns'),
 
             ], className="row",style={"margin": "38px 40px"}
@@ -162,30 +185,29 @@ app.layout = html.Div(
                                                                   inline=True,
                                                                   switch=True,
                                                               ),
-                                                          ]
+                                                          ],style={"margin-top":"2%" }
                                                       ),
-                                                      dcc.Graph(id='model_graph_front',animate=True, style={'width': '100%'})  ,
+                                                      dcc.Graph(id='model_graph_front',animate=True, style={'width': '100%', "margin-top":"1%"  } )  ,
 
                                                       html.P(
                                                           children="ENTITIES - Precision, F1, Recall scores ",style={"margin-left": "4%",'fontSize':'1.5rem','color':'blue'},
                                                           className="card-text",
                                                       ),
-                                                      dbc.Button("Open App", id="opentwo",  color='warning', style={'margin': 'auto', 'width': '100%'}),
+                                                      dbc.Button("Open App", id="opentwo",  color='warning', style={ 'width': '100%'}),
                                                       dbc.Modal(
                                                           [
                                                               dbc.ModalBody(DropdownApp_model_summary_dataset),
-                                                              dbc.ModalFooter(
-                                                                  dbc.Button("Close", id="closetwo", className="ml-auto",outline=True,color="danger",block=True)
-                                                              ),
+
                                                           ],
-                                                          id="modaltwo",size="xl"
+                                                          id="modaltwo",style={'width':"0rem","height":"0rem","margin-left":"300px"}
                                                       ),
                                                   ]
                                               ),
                                           ],
-                                          style={"width": "134rem","height":"75rem",'background-color':'rgb(176,196,222)'},
+                                          style={"width": "155rem","height":"75rem",'background-color':'rgb(176,196,222)'},
                                       )     ],className='six columns')
-                                              ], className="row",  style={"margin": "38px 40px"}  ),
+                                              ], className="row" ,  style={"margin":"40px -35px"} ),
+                                              # near classname='row'  style={"margin": "0px 0px"}
 #card 2
 
             html.Div(
@@ -195,7 +217,7 @@ app.layout = html.Div(
                         #dbc.CardImg(src="logo.png", top=True),
                     dbc.CardBody(
                         [   html.Div([
-                            html.H2(children="BERT/SPACY METRICS ANALYSIS", style={"margin-left": "%",'fontSize':'2.5rem','font-family':'Trocchi, serif','color':'blue',},className="card-title"),
+                            html.H2(children="Entity Level Metrics", style={"margin-left": "%",'fontSize':'2.5rem','font-family':'Trocchi, serif','color':'blue',},className="card-title"),
                             dcc.Dropdown(id="entity_dropdown_front",
                                                     options=[{
                                                             'label':i,
@@ -251,18 +273,16 @@ app.layout = html.Div(
                             dbc.Modal(
                                 [
                                     dbc.ModalBody(DropdownApp_entity),
-                                    dbc.ModalFooter(
-                                        dbc.Button("Close", id="closeone", className="ml-auto",outline=True,color="danger",block=True)
-                                    ),
+
                                 ],
-                                id="modalone",size="xl"
+                                id="modalone",style={'width':"0rem","height":"0rem","margin-left":"300px"}
                             ),
                         ]
                     ),
                 ],
-                style={"width": "134rem","height":"75rem",'background-color':'rgb(176,196,222)'},
+                style={"width": "155rem","height":"75rem",'background-color':'rgb(176,196,222)'},
             )
-     ],className='nine columns')       ], className="row",  style={"margin": "38px 40px"}  ) ,
+     ],className='nine columns')       ], className="row" , style={"margin":"40px -35px"}  ) ,
 #card 3
             html.Div(
             [
@@ -271,18 +291,18 @@ app.layout = html.Div(
                         #dbc.CardImg(src="logo.png", top=True),
             dbc.CardBody(
                 [   html.Div([
-                    html.H2(children="ENTITY SUMMARY", style={"margin-left": "0%",'fontSize':'2.5rem','font-family':'Trocchi, serif','color':'blue'}, className="card-title"),
+                    html.H2(children="Data Distribution", style={"margin-left": "0%",'fontSize':'2.5rem','font-family':'Trocchi, serif','color':'blue'}, className="card-title"),
 
                           html.P(
-                          children="Select Records",style={"margin-left": "0%",'fontSize':'2.5rem',"font-weight":"bold","margin-left": "0%",'font-family':'Trocchi, serif','color':'rgb(47,79,79)'},className="card-title"),
+                          children="Select Records",style={"margin-left": "0%",'fontSize':'2.5rem',"margin-left": "0%",'font-family':'Trocchi, serif','color':'rgb(47,79,79)'},className="card-title"),
                         dcc.Dropdown( id="entity-term-input-dataset-summary-front",
                                       options=[{
                                                 'label':i,
                                                 'value':i}for i in df_model['TOTAL RECORDS'].unique()],
                                     placeholder="Select DATASET - first",
-                                    style={'height': '300%', 'width': '98%','fontSize':'1.7rem',"margin-left": "0%"},
+                                    style={'height': '300%', 'width': '100%','fontSize':'1.7rem',"margin-left": "0%"},
                                     value=[] )    ,
-                        dcc.Graph(id='dcc_entity_bottom_left',animate=True, style={'width': '100%','margin-top': '22px'} )
+                        dcc.Graph(id='dcc_entity_bottom_left',animate=True, style={'width': '100%',"margin-top":"4%" } )
 
                                                    ]),
                     html.P(
@@ -293,24 +313,22 @@ app.layout = html.Div(
                     dbc.Modal(
                         [
                             dbc.ModalBody(DropdownApp_model_term),
-                            dbc.ModalFooter(
-                                dbc.Button("Close", id="closethree", className="ml-auto",outline=True,color="danger",block=True)
-                            ),
+
                         ],
-                        id="modalthree",size="xl"
+                        id="modalthree",style={'width':"0rem","height":"0rem","margin-left":"300px"}
                     ),
                 ],
-                style={"width": "134rem","height":"75rem",'background-color':'rgb(176,196,222)'}
+                style={"width": "155rem","height":"75rem",'background-color':'rgb(176,196,222)'}
             ),
-     ],className='nine columns')       ], className="row",  style={"margin": "38px 40px"}  )
+     ],className='nine columns')       ], className="row" , style={"margin":"40px -35px"}   )
 
 
 
                 ]) ], className='ten columns offset-by-one')],
-), style={"background-color": "rgb(220,220,220)"})
+), style={"background-color": "rgb(220,220,220)"}   )
 
 
-colors_entity_term=['rgb(25,25,112)','rgb(139,69,19)','rgb(72,61,139)','rgb(139,0,139)','rgb(47,79,79)','rgb(0,100,0)','rgb(255,69,0)','rgb(128,0,0)','rgb(255,255,0)','rgb(0,128,128)','rgb(255,140,0)','rgb(0,128,128)','rgb(188,143,143)']
+colors_entity_term=['rgb(70,130,180)','rgb(0,100,0)','rgb(136, 204, 0)','rgb(179, 255, 179)','rgb(25,25,112)','rgb(25,25,112)','rgb(244,164,96)','rgb(55, 83, 109)','rgb(0,128,128)','rgb(255,140,0)','rgb(0,128,128)','rgb(188,143,143)']
 colors_entity=[['rgb(25,25,112)','rgb(25,25,112)','rgb(0,191,255)','rgb(70,130,180)'],['rgb(0,128,0)','rgb(0,100,0)','rgb(136, 204, 0)','rgb(179, 255, 179)']]
 colors=['rgb(25,25,112)','rgb(244,164,96)','rgb(188,143,143)','rgb(55, 83, 109)','rgb(227,38,54)','rgb(135,206,250)','rgb(0,128,0)','rgb(245,222,179)','rgb(178,132,190)','rgb(128,128,128)','rgb(0,128,128)','rgb(152,251,152)','rgb(102, 51, 0)','rgb(107,142,35)','rgb(221,160,221)','rgb(244,164,96)','rgb(128,0,0)','rgb(250,250,210)','rgb(245,255,250)']
 #CARD 2 BERT METRICS ANALYSIS
@@ -345,10 +363,17 @@ def update_figure(dropdown,model,toggle):
 
     figure=dict(
                     data=data_select,
-                    layout=go.Layout(title='EVALUATION METRICS',
-                                       colorway=["#EF963B", "#EF533B"],hovermode="closest",
-                                        xaxis={'title': "RECORDS",
-                                               'titlefont':{'color': 'black','size': 20},
+                    layout=go.Layout(
+                                    margin=dict(pad=0),
+                                    xaxis_type='category', #space between x-axis values is constant
+                                    title='EVALUATION METRICS',
+                                    colorway=["#EF963B", "#EF533B"],hovermode="closest",
+                                    #    paper_bgcolor="rgb(0,0,0)",
+                                    #    plot_bgcolor= "rgb(0,0,0)",
+                                        xaxis={'title': "#RECORDS",
+
+                                            'ticklen':10,
+                                             'titlefont':{'color': 'black','size': 20},
                                                'tickfont':{'color': 'black','size': 20 } },
                                        yaxis={'title': "ACCURACY",
                                               'titlefont':{'color': 'black','size': 20},
@@ -356,6 +381,8 @@ def update_figure(dropdown,model,toggle):
                                        legend={'x': 1, 'y':1 }
                                                )
                                           )
+
+
     print("the figure is")
 
     print(figure['data'])
@@ -392,6 +419,7 @@ def update_figure(dropdown_modal_1,model_modal_1,toggle_modal_1):
     figure=dict(
                     data=data_select,
                     layout=go.Layout(title='EVALUATION METRICS',
+                                        xaxis_type='category', #space between x-axis values is constant
                                        colorway=["#EF963B", "#EF533B"],hovermode="closest",
                                         xaxis={'title': "RECORDS",
                                                'titlefont':{'color': 'black','size': 20},
@@ -444,6 +472,7 @@ def modelsummarydatasetfront(model,metrics):
     figure=dict(
             data=data_select,
             layout=go.Layout(title='EVALUATION METRICS',
+                            xaxis_type='category', #space between x-axis values is constant
                                colorway=["#EF963B", "#EF533B"],hovermode="closest",
                                 xaxis={'title': "RECORDS",
                                        'titlefont':{'color': 'black','size': 20},
@@ -483,6 +512,7 @@ def modelsummarydatasetfront(metrics,model):
     figure=dict(
             data=data_select,
             layout=go.Layout(title='EVALUATION METRICS',
+                            xaxis_type='category', #space between x-axis values is constant
                                colorway=["#EF963B", "#EF533B"],hovermode="closest",
                                 xaxis={'title': "RECORDS",
                                        'titlefont':{'color': 'black','size': 20},
@@ -530,6 +560,7 @@ def update_figure(dataset):
     figure=dict(
                     data=data_select,
                     layout=go.Layout(title='EVALUATION METRICS',
+                                        xaxis_type='category', #space between x-axis values is constant
                                        colorway=["#EF963B", "#EF533B"],hovermode="closest",
                                         xaxis={'title': "RECORDS",
                                                'titlefont':{'color': 'black','size': 20},
@@ -565,6 +596,7 @@ def update_figure(dataset):
     figure=dict(
                     data=data_select,
                     layout=go.Layout(title='EVALUATION METRICS',
+                                    xaxis_type='category', #space between x-axis values is constant
                                        colorway=["#EF963B", "#EF533B"],hovermode="closest",
                                         xaxis={'title': "RECORDS",
                                                'titlefont':{'color': 'black','size': 20},
@@ -589,7 +621,5 @@ def toggle_modal(n1,n2,is_open):
         return not is_open
     return is_open
 
-
 if __name__ == '__main__':
     app.run_server(debug=True)
-
