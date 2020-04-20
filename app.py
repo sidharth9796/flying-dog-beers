@@ -40,7 +40,7 @@ DropdownApp_model_summary_dataset= html.Div( [
                                           'label':i,
                                            'value':i}for i in df_model['MODEL'].unique()],
                                          placeholder="Select MODEL ",
-                                         style={'height': '300%', 'width': '100%','fontSize':'1.7rem'},
+                                         style={'height': '300%', 'width': '100%','fontSize':'1.7rem','font-family': 'Montserrat'},
                                          multi = True,
                                          value=[] )
                                             ], className='nine columns')
@@ -54,7 +54,7 @@ DropdownApp_model_summary_dataset= html.Div( [
                                 ],
                                 value=[],
                                 id="switches-inline-input-model-metrics-summary_modal_2",
-                                style={'height': '300%', 'width': '100%','fontSize':'1.7rem',"margin-top":"1%","margin-left":"1%"},
+                                style={'height': '300%', 'width': '100%','font-family': 'Montserrat','fontSize':'1.7rem',"margin-top":"1%","margin-left":"1%"},
                                 inline=True,
                                 switch=True,
                             ),
@@ -80,7 +80,7 @@ DropdownApp_entity =html.Div( [
                                                             'label':i,
                                                             'value':i}for i in df_metrics['Entity'].unique()],
                                                                         placeholder="Select entity",
-                                                        style={'height': '100%', 'width': '86%'},
+                                                        style={'height': '100%','font-family': 'Montserrat', 'width': '86%'},
                                                         multi = True,
                                                         value=[] ),
 
@@ -95,7 +95,7 @@ DropdownApp_entity =html.Div( [
                                         ],
                                         value=["Precision","Recall","F1"],
                                         id="switches-inline-input-modal_1",
-                                        style={'height': '150%', 'width': '100%','fontSize':'1.2rem'},
+                                        style={'height': '150%', 'width': '100%','font-family': 'Montserrat','fontSize':'1.2rem'},
                                         inline=True,
                                         switch=True,
                                     ),
@@ -108,7 +108,7 @@ DropdownApp_entity =html.Div( [
                                                             'label':i,
                                                             'value':i}for i in df_metrics['MODEL'].unique()],
                                                                         placeholder="Select MODEL",
-                                                        style={'height': '300%', 'width': '86%'},
+                                                        style={'height': '300%', 'width': '86%','font-family': 'Montserrat'},
                                                         #value='BERT',
                                                     #    clearable=False
 
@@ -128,13 +128,13 @@ DropdownApp_model_term=  html.Div([
                     html.H2(children="ENTITY SUMMARY", style={"margin-left": "0%",'fontSize':'2.5rem','font-family': 'Montserrat','color':'blue'}, className="card-title"),
 
                           html.P(
-                          children="Select Records",style={"margin-left": "0%",'fontSize':'2.5rem',"font-weight":"bold","margin-left": "0%",'font-family':'Trocchi, serif','color':'rgb(47,79,79)'},className="card-title"),
+                          children="Select Records",style={"margin-left": "0%",'fontSize':'2.5rem',"font-weight":"bold","margin-left": "0%",'font-family': 'Montserrat','color':'rgb(47,79,79)'},className="card-title"),
                         dcc.Dropdown( id="entity-term-input-dataset-summary-front_modal_3",
                                       options=[{
                                                 'label':i,
                                                 'value':i}for i in df_model['TOTAL RECORDS'].unique()],
                                     placeholder="Select DATASET - first",
-                                    style={'height': '300%', 'width': '98%','fontSize':'1.7rem',"margin-left": "0%"},
+                                    style={'height': '300%', 'width': '98%','font-family': 'Montserrat','fontSize':'1.7rem',"margin-left": "0%"},
                                     value=[] )    ,
                         dcc.Graph(id='dcc_entity_bottom_left_modal_3',animate=True, style={"backgroundColor": "#1a2d46",'color':'#ffffff','width':"178rem","height":"70rem"} ),
                         dbc.ModalFooter(
@@ -168,7 +168,7 @@ app.layout = html.Div(
                                                   'label':i,
                                                   'value':i}for i in df_model['MODEL'].unique()],
                                                    placeholder="Select Model",
-                                                  style={'height': '300%', 'width': '100%'},
+                                                  style={'height': '300%', 'width': '100%','font-family': 'Montserrat'},
                                                   multi = True,
                                                   value=[] ),
                                   dbc.FormGroup([
@@ -181,7 +181,7 @@ app.layout = html.Div(
                                                       ],
                                                                   value=[],
                                                                   id="switches-inline-input-metrics-dropdown-front",
-                                                                  style={'height': '300%', 'width': '100%','fontSize':'1.7rem'},
+                                                                  style={'height': '300%', 'width': '100%','font-family': 'Montserrat','fontSize':'1.7rem'},
                                                                   inline=True,
                                                                   switch=True,
                                                               ),
@@ -190,7 +190,7 @@ app.layout = html.Div(
                                                       dcc.Graph(id='model_graph_front',animate=True, style={'width': '100%', "margin-top":"1%"  } )  ,
 
                                                       html.P(
-                                                          children="ENTITIES - Precision, F1, Recall scores ",style={"margin-left": "4%",'fontSize':'1.5rem','color':'blue'},
+                                                          children="ENTITIES - Precision, F1, Recall scores ",style={"margin-left": "4%",'font-family': 'Montserrat','fontSize':'1.5rem','color':'blue'},
                                                           className="card-text",
                                                       ),
                                                       dbc.Button("Open App", id="opentwo",  color='warning', style={ 'width': '100%'}),
@@ -223,7 +223,7 @@ app.layout = html.Div(
                                                             'label':i,
                                                             'value':i}for i in df_metrics['Entity'].unique()],
                                                                         placeholder="Select entity",
-                                                        style={'height': '300%', 'width': '100%'},
+                                                        style={'height': '300%', 'width': '100%','font-family': 'Montserrat'},
                                                         multi = True,
                                                         value=[] ),
 
@@ -234,7 +234,7 @@ app.layout = html.Div(
                                                             'label':i,
                                                             'value':i}for i in df_metrics['MODEL'].unique()],
                                                                         placeholder="Select MODEL",
-                                                        style={'height': '300%', 'width': '100%'},
+                                                        style={'height': '300%', 'width': '100%','font-family': 'Montserrat'},
                                                         #value='BERT',
                                                     #    clearable=False
 
@@ -242,7 +242,7 @@ app.layout = html.Div(
 
                             html.Div([
                             html.P(
-                                children="Hint : clear the values",style={"margin-left": "0%",'fontSize':'1.5rem','color':'blue'},
+                                children="Hint : clear the values",style={"margin-left": "0%",'fontSize':'1.5rem','color':'blue','font-family': 'Montserrat'},
                                     className="six columns",
                                                         )  ] , className='six columns'    )    ], className="row",style={"margin": "10px 0px 0px 0px"})   ,
 
@@ -257,7 +257,7 @@ app.layout = html.Div(
                                         ],
                                         value=["Precision","Recall","F1"],
                                         id="switches-inline-input",
-                                        style={'height': '300%', 'width': '100%','fontSize':'1.7rem'},
+                                        style={'height': '300%', 'width': '100%','font-family': 'Montserrat','fontSize':'1.7rem'},
                                         inline=True,
                                         switch=True,
                                     ),
@@ -266,7 +266,7 @@ app.layout = html.Div(
                             dcc.Graph(id='entity_graph_front',animate=True, style={'width': '100%'})  ,
 
                             html.P(
-                                children="ENTITIES - Precision, F1, Recall scores ",style={"margin-left": "4%",'fontSize':'1.5rem','color':'blue'},
+                                children="ENTITIES - Precision, F1, Recall scores ",style={"margin-left": "4%",'font-family': 'Montserrat','fontSize':'1.5rem','color':'blue'},
                                 className="card-text",
                             ),
                             dbc.Button("Open App", id="openone",  color='warning', style={'margin': 'auto', 'width': '100%'}),
@@ -294,19 +294,19 @@ app.layout = html.Div(
                     html.H2(children="Data Distribution", style={"margin-left": "0%",'fontSize':'2.5rem','font-family': 'Montserrat','color':'blue'}, className="card-title"),
 
                           html.P(
-                          children="Select Records",style={"margin-left": "0%",'fontSize':'2.5rem',"margin-left": "0%",'font-family':'Trocchi, serif','color':'rgb(47,79,79)'},className="card-title"),
+                          children="Select Records",style={"margin-left": "0%",'fontSize':'2.5rem',"margin-left": "0%",'font-family': 'Montserrat','color':'rgb(47,79,79)'},className="card-title"),
                         dcc.Dropdown( id="entity-term-input-dataset-summary-front",
                                       options=[{
                                                 'label':i,
                                                 'value':i}for i in df_model['TOTAL RECORDS'].unique()],
                                     placeholder="Select DATASET - first",
-                                    style={'height': '300%', 'width': '100%','fontSize':'1.7rem',"margin-left": "0%"},
+                                    style={'height': '300%', 'width': '100%','font-family': 'Montserrat','fontSize':'1.7rem',"margin-left": "0%"},
                                     value=[] )    ,
                         dcc.Graph(id='dcc_entity_bottom_left',animate=True, style={'width': '100%',"margin-top":"4%" } )
 
                                                    ]),
                     html.P(
-                            children="Tag frequency ",style={"margin-left": "4%",'fontSize':'1.5rem','color':'blue'},
+                            children="Tag frequency ",style={"margin-left": "4%",'font-family': 'Montserrat','fontSize':'1.5rem','color':'blue'},
                             className="card-text",
                                                 ),
                     dbc.Button("Open App", id="openthree",  color='warning', style={'margin': 'auto', 'width': '100%',}),
