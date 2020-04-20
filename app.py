@@ -32,7 +32,7 @@ DropdownApp_model_summary_dataset= html.Div( [
                 #dbc.CardImg(src="logo.png", top=True),
                 dbc.CardBody(
                 [   html.Div([
-                    html.H2(children="MODEL SUMMARY ", style={"margin-left": "1%",'fontSize':'2.5rem',"font-weight":"bold",'font-family':'Trocchi, serif','color':'rgb(0,0,128)'}, className="card-title"),
+                    html.H2(children="MODEL SUMMARY ", style={"margin-left": "1%",'fontSize':'2.5rem',"font-weight":"bold",'font-family': 'Montserrat','color':'rgb(0,0,128)'}, className="card-title"),
                     html.Div([
                         html.Div([
                             dcc.Dropdown( id="switches-inline-input-modal-summary-front_modal_2",
@@ -72,7 +72,7 @@ DropdownApp_entity =html.Div( [
                 #dbc.CardImg(src="logo.png", top=True),
                 dbc.CardBody(
                 [   html.Div([
-                    html.H2(children="Entity Level Metrics ", style={"margin-left": "0%",'fontSize':'2.5rem',"font-weight":"bold",'font-family':'Trocchi, serif','color':'rgb(0,0,128)'}, className="card-title"),
+                    html.H2(children="Entity Level Metrics ", style={"margin-left": "0%",'fontSize':'2.5rem',"font-weight":"bold",'font-family': 'Montserrat','color':'rgb(0,0,128)'}, className="card-title"),
 
 
                             dcc.Dropdown(id="entity_dropdown_modal_1",
@@ -125,7 +125,7 @@ DropdownApp_model_term=  html.Div([
             #dbc.CardImg(src="logo.png", top=True),
             dbc.CardBody(
                 [   html.Div([
-                    html.H2(children="ENTITY SUMMARY", style={"margin-left": "0%",'fontSize':'2.5rem','font-family':'Trocchi, serif','color':'blue'}, className="card-title"),
+                    html.H2(children="ENTITY SUMMARY", style={"margin-left": "0%",'fontSize':'2.5rem','font-family': 'Montserrat','color':'blue'}, className="card-title"),
 
                           html.P(
                           children="Select Records",style={"margin-left": "0%",'fontSize':'2.5rem',"font-weight":"bold","margin-left": "0%",'font-family':'Trocchi, serif','color':'rgb(47,79,79)'},className="card-title"),
@@ -162,7 +162,7 @@ app.layout = html.Div(
               #dbc.CardImg(src="logo.png", top=True),
                     dbc.CardBody(
                           [ html.Div([
-                              html.H2(children="MODEL SUMMARY ", style={"margin-left": "0%",'fontSize':'2.5rem','font-family':'Trocchi, serif','color':'blue',},className="card-title"),
+                              html.H2(children="MODEL SUMMARY ", style={"margin-left": "0%",'fontSize':'2.5rem','font-family': 'Montserrat','color':'blue',},className="card-title"),
                                 dcc.Dropdown(id="switches-inline-input-model-dropdown-front",
                                              options=[{
                                                   'label':i,
@@ -217,7 +217,7 @@ app.layout = html.Div(
                         #dbc.CardImg(src="logo.png", top=True),
                     dbc.CardBody(
                         [   html.Div([
-                            html.H2(children="Entity Level Metrics", style={"margin-left": "%",'fontSize':'2.5rem','font-family':'Trocchi, serif','color':'blue',},className="card-title"),
+                            html.H2(children="Entity Level Metrics", style={"margin-left": "%",'fontSize':'2.5rem','font-family': 'Montserrat','color':'blue',},className="card-title"),
                             dcc.Dropdown(id="entity_dropdown_front",
                                                     options=[{
                                                             'label':i,
@@ -291,7 +291,7 @@ app.layout = html.Div(
                         #dbc.CardImg(src="logo.png", top=True),
             dbc.CardBody(
                 [   html.Div([
-                    html.H2(children="Data Distribution", style={"margin-left": "0%",'fontSize':'2.5rem','font-family':'Trocchi, serif','color':'blue'}, className="card-title"),
+                    html.H2(children="Data Distribution", style={"margin-left": "0%",'fontSize':'2.5rem','font-family': 'Montserrat','color':'blue'}, className="card-title"),
 
                           html.P(
                           children="Select Records",style={"margin-left": "0%",'fontSize':'2.5rem',"margin-left": "0%",'font-family':'Trocchi, serif','color':'rgb(47,79,79)'},className="card-title"),
